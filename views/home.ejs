@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{
+    margin : 0;
+    padding : 0;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color:-moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
+}
+li {
+  float: right;
+}
+li:last-child {
+  border-right: none;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  margin-right: 20px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+h1 a {
+  color: red;
+}
+
+/* .active {
+  background-color: grey;
+} */
+</style>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+   <!-- <h3>Blood Donation Management System</h3>  -->
+  <!-- <li><a href="/logout">Logout</a></li>
+  <li><a href="/login">Login</a></li>
+  <li><a href="/signup">Signup</a></li> -->
+  
+  <h1 style="margin:30px;margin-top: 20px;margin-bottom: 0px;"><a href="/">BDMS</a></h1>
+  <ul>
+    <% if(user) { %>
+      <li><a href="/logout">Log Out</a></li>
+      <li><a href="/banks">Enquire</a></li>
+      <li><a href="/AddDetails">Donate</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/">Welcome, <%= user.name %></a></li>
+      <% } else { %>
+        <% if(admin) { %>
+          <li><a href="/logout">Log Out</a></li>
+          <li><a href="/banks">Enquire</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/">Welcome, <%= admin.name %></a></li>
+        <% } else { %>
+          <li><a href="/banks">Enquire</a></li>
+          <li><a href="/signup">Sign Up</a></li>
+          <li><a href="/login">Log In</a></li>
+          <li><a href="/">Home</a></li>
+        <% } %>
+      <% } %>
+  </ul>
+
+
+<h1 style="font-size: 50px;color:white;text-align:center;margin: 50px;" >Welcome !!!</h1>
+<h1 style="font-size: 40px;color:red;text-align:center;margin: 40px;" >Blood Donation Management System</h1>
+<p style="text-align:center;"><img style="text-align: center;" src="https://tse1.mm.bing.net/th?id=OIP.qNcWWuq9e75yLrIKEp8MigHaHa&pid=Api&rs=1&c=1&qlt=95&w=113&h=113"></img></p>
+<h4 style="font-size: 25px;color:white;text-align:center;margin:20px;padding:50px;" >The Blood You Donate Gives Someone Another Chance At Life. One Day That Someone May Be A Close Relative, A Friend, A Loved One Or Even You.</h4>
+
+
+<% if(user) { %>
+  <h3 style="text-align: center;"><a href="/userHistory/<%= user._id %>">Check your Donation History</a></h3>
+<% } %>
+
+<footer>Copyright	&#169; 2020 Blood Bank Management System</footer>
+</body>
+</html>
+
+<script>
+
+
+    // var x = getCookie("jwt");
+    // console.log(x);
+
+    // const nameError = document.querySelector('.name.error');
+    // const contactError = document.querySelector('.contact.error');
+    // form.addEventListener('submit', async (e) => {
+    //   e.preventDefault();
+    //   // reset errors
+    //   //console.log('awhrf;oqiehr');
+    //   nameError.textContent = '';
+    //   contactError.textContent = '';
+       
+    //   try {
+    //     const res = await fetch('/signup', { 
+    //       method: 'POST', 
+    //       body: JSON.stringify({ name, contact, blood_group, password }),
+    //       headers: {'Content-Type': 'application/json'}
+    //     });
+    //     const data = await res.json();
+    //     console.log(data);
+    //     if (data.errors) {
+    //       nameError.textContent = data.errors.name;
+    //       contactError.textContent = data.errors.contact;
+    //       bloodGroupError.textContent = data.errors.blood_group;
+    //       passwordError.textContent = data.errors.password;
+    //     }
+    //     if (data.user)         
+    //         location.assign('/login');
+    //     console.log(contactError.textContent, passwordError.textContent);
+    //     //if (data.user) {
+    //     //}
+    //   }
+    //   catch (err) {
+    //     console.log(err);
+    //   }
+    // });
+  </script>

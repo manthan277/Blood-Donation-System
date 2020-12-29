@@ -1,0 +1,132 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body{
+        margin : 0;
+        padding : 0;
+    }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color:-moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
+    }
+    li {
+      float: right;
+    }
+    li:last-child {
+      border-right: none;
+    }
+    
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      margin-right: 20px;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    
+    li a:hover:not(.active) {
+      background-color: #111;
+    }
+    
+    h1 a {
+      color: red;
+    }
+
+    /* .active {
+      background-color: grey;
+    } */
+    </style>
+</head>
+<body>
+  <h1 style="margin:30px;margin-top: 20px;margin-bottom: 0px;"><a href="/">BDMS</a></h1>
+  <ul>
+    <% if(user) { %>
+      <li><a href="/logout">Log Out</a></li>
+      <li><a href="/banks">Enquire</a></li>
+      <li><a href="/AddDetails">Donate</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/">Welcome, <%= user.name %></a></li>
+      <% } else { %>
+        <% if(admin) { %>
+          <li><a href="/logout">Log Out</a></li>
+          <li><a href="/banks">Enquire</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/">Welcome, <%= admin.name %></a></li>
+        <% } else { %>
+          <li><a href="/banks">Enquire</a></li>
+          <li><a href="/signup">Sign Up</a></li>
+          <li><a href="/login">Log In</a></li>
+          <li><a href="/">Home</a></li>
+        <% } %>
+      <% } %>
+  </ul>
+    <div class="login">
+        <h1 style="margin-bottom: 30px;">SIGN UP</h1>
+        <form action="/signup" novalidate>
+            <input type="text" name="name" placeholder="name" required="required" />
+            <div class="name error" style="color:aqua"></div><br>
+            <input type="text" name="contact" placeholder="contact" required="required" />
+            <div class="contact error" style="color:aqua"></div><br>
+            <input type="text" name="blood_group" placeholder="blood group" required="required" />
+            <div class="bloodGroup error" style="color: aqua"></div><br>
+            <input type="password" name="password" placeholder="Password" required="required" />
+            <div class="password error" style="color:aqua"></div><br>
+            <button class="btn btn-primary btn-block btn-large">Sign Up</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+<script>
+    const form = document.querySelector('form');
+    const nameError = document.querySelector('.name.error');
+    const contactError = document.querySelector('.contact.error');
+    const bloodGroupError = document.querySelector('.bloodGroup.error');
+    const passwordError = document.querySelector('.password.error');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      // reset errors
+      //console.log('awhrf;oqiehr');
+      nameError.textContent = '';
+      contactError.textContent = '';
+      //bloodGroupError.textContent = '';
+      passwordError.textContent = '';
+      // get values
+      const contact = form.contact.value;
+      const password = form.password.value;
+      const blood_group = form.blood_group.value;
+      const name = form.name.value;  
+      try {
+        const res = await fetch('/signup', { 
+          method: 'POST', 
+          body: JSON.stringify({ name, contact, blood_group, password }),
+          headers: {'Content-Type': 'application/json'}
+        });
+        const data = await res.json();
+        console.log(data);
+        if (data.errors) {
+          nameError.textContent = data.errors.name;
+          contactError.textContent = data.errors.contact;
+          bloodGroupError.textContent = data.errors.blood_group;
+          passwordError.textContent = data.errors.password;
+        }
+        if (data.user)         
+            location.assign('/login');
+        console.log(contactError.textContent, passwordError.textContent);
+        //if (data.user) {
+        //}
+      }
+      catch (err) {
+        console.log(err);
+      }
+    });
+  </script>
